@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/go-pay/gopay"
+	"github.com/yuanqinguo/gopay"
 )
 
 // 请求分账API
@@ -282,3 +282,139 @@ func (c *ClientV3) V3ProfitShareBills(bm gopay.BodyMap) (*ProfitShareBillsRsp, e
 	}
 	return wxRsp, c.verifySyncSign(si)
 }
+
+// 电商收付通（分账）
+
+// 请求分账API
+//	微信会在接到请求后立刻返回请求接收结果，分账结果需要自行调用查询接口来获取
+//	Code = 0 is success
+// 	电商收付通请求分账API文档： https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter7_4_1.shtml
+func (c *ClientV3) V3CommerceProfitShareOrder(bm gopay.BodyMap) (*CommerceProfitShareOrderRsp, error) {
+	authorization, err := c.authorization(MethodPost, v3CommerceProfitShareOrder, bm)
+	if err != nil {
+		return nil, err
+	}
+	res, si, bs, err := c.doProdPost(bm, v3CommerceProfitShareOrder, authorization)
+	if err != nil {
+		return nil, err
+	}
+
+	wxRsp := &CommerceProfitShareOrderRsp{Code: Success, SignInfo: si}
+	wxRsp.Response = new(CommerceProfitShareOrder)
+	if err = json.Unmarshal(bs, wxRsp.Response); err != nil {
+		return nil, fmt.Errorf("json.Unmarshal(%s)：%w", string(bs), err)
+	}
+	if res.StatusCode != http.StatusOK {
+		wxRsp.Code = res.StatusCode
+		wxRsp.Error = string(bs)
+		return wxRsp, nil
+	}
+	return wxRsp, c.verifySyncSign(si)
+}
+
+// 查询分账结果API
+//	Code = 0 is success
+// 	电商收付通文档：https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter7_4_2.shtml
+func (c *ClientV3) V3CommerceProfitShareOrderQuery(orderNo string, bm gopay.BodyMap) (*CommerceProfitShareOrderQueryRsp, error) {
+	uri := fmt.Sprintf(v3CommerceProfitShareQuery, orderNo) + "?" + bm.EncodeURLParams()
+	authorization, err := c.authorization(MethodGet, uri, nil)
+	if err != nil {
+		return nil, err
+	}
+	res, si, bs, err := c.doProdGet(uri, authorization)
+	if err != nil {
+		return nil, err
+	}
+
+	wxRsp := &CommerceProfitShareOrderQueryRsp{Code: Success, SignInfo: si}
+	wxRsp.Response = new(CommerceProfitShareOrderQuery)
+	if err = json.Unmarshal(bs, wxRsp.Response); err != nil {
+		return nil, fmt.Errorf("json.Unmarshal(%s)：%w", string(bs), err)
+	}
+	if res.StatusCode != http.StatusOK {
+		wxRsp.Code = res.StatusCode
+		wxRsp.Error = string(bs)
+		return wxRsp, nil
+	}
+	return wxRsp, c.verifySyncSign(si)
+}
+
+// 完结分账API
+//	Code = 0 is success
+// 	电商收付通-完结分账文档：https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter7_4_5.shtml
+func (c *ClientV3) V3CommerceProfitShareFinishOrder(bm gopay.BodyMap) (*CommerceProfitShareFinishOrderRsp, error) {
+	authorization, err := c.authorization(MethodPost, v3CommerceProfitShareFinish, bm)
+	if err != nil {
+		return nil, err
+	}
+	res, si, bs, err := c.doProdPost(bm, v3CommerceProfitShareFinish, authorization)
+	if err != nil {
+		return nil, err
+	}
+
+	wxRsp := &CommerceProfitShareFinishOrderRsp{Code: Success, SignInfo: si}
+	wxRsp.Response = new(CommerceProfitShareFinishOrder)
+	if err = json.Unmarshal(bs, wxRsp.Response); err != nil {
+		return nil, fmt.Errorf("json.Unmarshal(%s)：%w", string(bs), err)
+	}
+	if res.StatusCode != http.StatusOK {
+		wxRsp.Code = res.StatusCode
+		wxRsp.Error = string(bs)
+		return wxRsp, nil
+	}
+	return wxRsp, c.verifySyncSign(si)
+}
+
+// 添加分账接收方API
+//	Code = 0 is success
+// 	电商收付通文档：https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter7_4_7.shtml
+func (c *ClientV3) V3CommerceProfitShareAddReceiver(bm gopay.BodyMap) (*ProfitShareAddReceiverRsp, error) {
+	authorization, err := c.authorization(MethodPost, v3CommerceProfitShareAddReceiver, bm)
+	if err != nil {
+		return nil, err
+	}
+	res, si, bs, err := c.doProdPost(bm, v3CommerceProfitShareAddReceiver, authorization)
+	if err != nil {
+		return nil, err
+	}
+
+	wxRsp := &ProfitShareAddReceiverRsp{Code: Success, SignInfo: si}
+	wxRsp.Response = new(ProfitShareAddReceiver)
+	if err = json.Unmarshal(bs, wxRsp.Response); err != nil {
+		return nil, fmt.Errorf("json.Unmarshal(%s)：%w", string(bs), err)
+	}
+	if res.StatusCode != http.StatusOK {
+		wxRsp.Code = res.StatusCode
+		wxRsp.Error = string(bs)
+		return wxRsp, nil
+	}
+	return wxRsp, c.verifySyncSign(si)
+}
+
+// 删除分账接收方API
+//	Code = 0 is success
+// 	电商收付通文档：https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter7_4_8.shtml
+func (c *ClientV3) V3CommerceProfitShareDeleteReceiver(bm gopay.BodyMap) (*ProfitShareDeleteReceiverRsp, error) {
+	authorization, err := c.authorization(MethodPost, v3CommerceProfitShareDeleteReceiver, bm)
+	if err != nil {
+		return nil, err
+	}
+	res, si, bs, err := c.doProdPost(bm, v3CommerceProfitShareDeleteReceiver, authorization)
+	if err != nil {
+		return nil, err
+	}
+
+	wxRsp := &ProfitShareDeleteReceiverRsp{Code: Success, SignInfo: si}
+	wxRsp.Response = new(ProfitShareDeleteReceiver)
+	if err = json.Unmarshal(bs, wxRsp.Response); err != nil {
+		return nil, fmt.Errorf("json.Unmarshal(%s)：%w", string(bs), err)
+	}
+	if res.StatusCode != http.StatusOK {
+		wxRsp.Code = res.StatusCode
+		wxRsp.Error = string(bs)
+		return wxRsp, nil
+	}
+	return wxRsp, c.verifySyncSign(si)
+}
+
+

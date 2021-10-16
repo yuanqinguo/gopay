@@ -229,6 +229,30 @@ type MediaUploadRsp struct {
 	Error    string       `json:"-"`
 }
 
+// 电商收付通-请求分账 Rsp
+type CommerceProfitShareOrderRsp struct {
+	Code     int                       `json:"-"`
+	SignInfo *SignInfo                 `json:"-"`
+	Response *CommerceProfitShareOrder `json:"response,omitempty"`
+	Error    string                    `json:"-"`
+}
+
+// 电商收付通-查询分账结果 Rsp
+type CommerceProfitShareOrderQueryRsp struct {
+	Code     int                            `json:"-"`
+	SignInfo *SignInfo                      `json:"-"`
+	Response *CommerceProfitShareOrderQuery `json:"response,omitempty"`
+	Error    string                         `json:"-"`
+}
+
+// 电商收付通-完结分账结果 Rsp
+type CommerceProfitShareFinishOrderRsp struct {
+	Code     int                            `json:"-"`
+	SignInfo *SignInfo                      `json:"-"`
+	Response *CommerceProfitShareFinishOrder `json:"response,omitempty"`
+	Error    string                         `json:"-"`
+}
+
 // 请求分账 Rsp
 type ProfitShareOrderRsp struct {
 	Code     int               `json:"-"`
@@ -1295,6 +1319,47 @@ type MediaUpload struct {
 	MediaId string `json:"media_id"` // 微信返回的媒体文件标识ID。
 }
 
+type CommerceProfitShareOrder struct {
+	SubMchid      string                           `json:"sub_mchid,omitempty"` // 子商户号，即分账的出资商户号【服务商模式】
+	TransactionId string                           `json:"transaction_id"`      // 微信订单号
+	OutOrderNo    string                           `json:"out_order_no"`        // 商户分账单号
+	OrderId       string                           `json:"order_id"`            // 微信分账单号
+	State         string                           `json:"status"`              // 分账单状态（每个接收方的分账结果请查看receivers中的result字段）:PROCESSING：处理中,FINISHED：分账完成
+	Receivers     []*CommerceProfitSharingReceiver `json:"receivers,omitempty"` // 分账接收方列表
+}
+
+// 电商收付通-分账接收方
+type CommerceProfitSharingReceiver struct {
+	Amount        int    `json:"amount"`           // 分账金额
+	Description   string `json:"description"`      // 分账描述
+	Type          string `json:"type"`             // 分账接收方类型
+	Account       string `json:"receiver_account"` // 分账接收方帐号
+	Result        string `json:"result"`           // 分账结果,PENDING：待分账,SUCCESS：分账成功,CLOSED：已关闭
+	ReceiverMchId string `json:"receiver_mchid"`   // 分账接收商户号
+	DealId        string `json:"deal_id"`          // 分账明细单号
+	FailReason    string `json:"fail_reason"`      // 分账失败原因ACCOUNT_ABNORMAL : 分账接收账户异常、NO_RELATION : 分账关系已解除、RECEIVER_HIGH_RISK : 高风险接收方、RECEIVER_REAL_NAME_NOT_VERIFIED : 接收方未实名、NO_AUTH : 分账权限已解除
+	CreateTime    string `json:"create_time"`      // 分账创建时间,遵循rfc3339标准格式，格式为YYYY-MM-DDTHH:mm:ss.sss+TIMEZONE
+	FinishTime    string `json:"finish_time"`      // 分账完成时间，遵循rfc3339标准格式，格式为YYYY-MM-DDTHH:mm:ss.sss+TIMEZONE
+}
+
+type CommerceProfitShareOrderQuery struct {
+	SubMchid      string                           `json:"sub_mchid,omitempty"` // 子商户号，即分账的出资商户号【服务商模式】
+	TransactionId string                           `json:"transaction_id"`      // 微信订单号
+	OutOrderNo    string                           `json:"out_order_no"`        // 商户分账单号
+	OrderId       string                           `json:"order_id"`            // 微信分账单号
+	State         string                           `json:"status"`              // 分账单状态（每个接收方的分账结果请查看receivers中的result字段）:PROCESSING：处理中,FINISHED：分账完成
+	Receivers     []*CommerceProfitSharingReceiver `json:"receivers,omitempty"` // 分账接收方列表
+	FinishAmount  int                              `json:"finish_amount"`       // 分账完结的分账金额，单位为分， 仅当查询分账完结的执行结果时，存在本字段
+	FinishDesc    string                           `json:"finish_description"`  // 分账完结的原因描述，仅当查询分账完结的执行结果时，存在本字段
+}
+
+type CommerceProfitShareFinishOrder struct {
+	SubMchid      string                           `json:"sub_mchid,omitempty"` // 子商户号，即分账的出资商户号【服务商模式】
+	TransactionId string                           `json:"transaction_id"`      // 微信订单号
+	OutOrderNo    string                           `json:"out_order_no"`        // 商户分账单号
+	OrderId       string                           `json:"order_id"`            // 微信分账单号
+}
+
 type ProfitShareOrder struct {
 	SubMchid      string                   `json:"sub_mchid,omitempty"` // 子商户号，即分账的出资商户号【服务商模式】
 	TransactionId string                   `json:"transaction_id"`      // 微信订单号
@@ -1374,7 +1439,7 @@ type ProfitShareAddReceiver struct {
 	Type           string `json:"type"`                      // 分账接收方类型MERCHANT_ID：商户ID,PERSONAL_OPENID：个人openid（由父商户APPID转换得到）
 	Account        string `json:"account"`                   // 分账接收方帐号
 	Name           string `json:"name,omitempty"`            // 分账接收方类型是MERCHANT_ID时，是商户全称（必传），当商户是小微商户或个体户时，是开户人姓名 分账接收方类型是PERSONAL_OPENID时，是个人姓名（选传，传则校验）
-	RelationType   string `json:"relation_type"`             // 商户与接收方的关系。STORE：门店STAFF：员工	STORE_OWNER：店主	PARTNER：合作伙伴	HEADQUARTER：总部	BRAND：品牌方	DISTRIBUTOR：分销商	USER：用户	SUPPLIER： 供应商	CUSTOM：自定义
+	RelationType   string `json:"relation_type,omitempty"`             // 商户与接收方的关系。STORE：门店STAFF：员工	STORE_OWNER：店主	PARTNER：合作伙伴	HEADQUARTER：总部	BRAND：品牌方	DISTRIBUTOR：分销商	USER：用户	SUPPLIER： 供应商	CUSTOM：自定义
 	CustomRelation string `json:"custom_relation,omitempty"` // 子商户与接收方具体的关系，本字段最多10个字。当字段relation_type的值为CUSTOM时，本字段必填;当字段relation_type的值不为CUSTOM时，本字段无需填写。
 }
 

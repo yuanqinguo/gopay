@@ -172,6 +172,16 @@ const (
 	v3ProfitShareMerchantConfigs = "/v3/profitsharing/merchant-configs/%s"     // 查询最大分账比例API GET
 	v3ProfitShareBills           = "/v3/profitsharing/bills"                   // 申请分账账单 GET
 
+	// 电商收付通分账
+	v3CommerceProfitShareOrder          = "/v3/ecommerce/profitsharing/orders"            // 请求分账 POST
+	v3CommerceProfitShareQuery          = "/v3/ecommerce/profitsharing/orders/%s"         // 查询分账结果 GET
+	v3CommerceProfitShareReturn         = "/v3/ecommerce/profitsharing/returnorders"      // 请求分账回退 POST
+	v3CommerceProfitShareReturnResult   = "/v3/ecommerce/profitsharing/returnorders/%s"   // 查询分账回退结果 GET
+	v3CommerceProfitShareFinish       = "/v3/ecommerce/profitsharing/finish-order"      // 完结分账 POST
+	v3CommerceProfitShareUnsplitAmount  = "/v3/ecommerce/profitsharing/orders/%s/amounts" // 查询剩余待分金额 GET
+	v3CommerceProfitShareAddReceiver    = "/v3/ecommerce/profitsharing/receivers/add"     // 添加分账接收方 POST
+	v3CommerceProfitShareDeleteReceiver = "/v3/ecommerce/profitsharing/receivers/delete"  // 删除分账接收方 POST
+
 	// 其他能力
 	v3MediaUploadImage = "/v3/merchant/media/upload"       // 图片上传 POST
 	v3MediaUploadVideo = "/v3/merchant/media/video_upload" // 视频上传 POST

@@ -4,10 +4,10 @@ import (
 	"crypto/rsa"
 	"net/http"
 
-	"github.com/go-pay/gopay"
-	"github.com/go-pay/gopay/pkg/xhttp"
-	"github.com/go-pay/gopay/pkg/xlog"
-	"github.com/go-pay/gopay/pkg/xpem"
+	"github.com/yuanqinguo/gopay"
+	"github.com/yuanqinguo/gopay/pkg/xhttp"
+	"github.com/yuanqinguo/gopay/pkg/xlog"
+	"github.com/yuanqinguo/gopay/pkg/xpem"
 )
 
 // ClientV3 微信支付 V3
