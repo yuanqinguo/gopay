@@ -247,10 +247,10 @@ type CommerceProfitShareOrderQueryRsp struct {
 
 // 电商收付通-完结分账结果 Rsp
 type CommerceProfitShareFinishOrderRsp struct {
-	Code     int                            `json:"-"`
-	SignInfo *SignInfo                      `json:"-"`
+	Code     int                             `json:"-"`
+	SignInfo *SignInfo                       `json:"-"`
 	Response *CommerceProfitShareFinishOrder `json:"response,omitempty"`
-	Error    string                         `json:"-"`
+	Error    string                          `json:"-"`
 }
 
 // 请求分账 Rsp
@@ -322,6 +322,22 @@ type ProfitShareMerchantConfigsRsp struct {
 	SignInfo *SignInfo                   `json:"-"`
 	Response *ProfitShareMerchantConfigs `json:"response,omitempty"`
 	Error    string                      `json:"-"`
+}
+
+// 二级商户余额提现 Rsp
+type CommerceFundWithdrawRsp struct {
+	Code     int                   `json:"-"`
+	SignInfo *SignInfo             `json:"-"`
+	Response *CommerceFundWithdraw `json:"response,omitempty"`
+	Error    string                `json:"-"`
+}
+
+// 二级商户余额提现状态查询 Rsp
+type CommerceFundWithdrawQueryRsp struct {
+	Code     int                        `json:"-"`
+	SignInfo *SignInfo                  `json:"-"`
+	Response *CommerceFundWithdrawQuery `json:"response,omitempty"`
+	Error    string                     `json:"-"`
 }
 
 // 申请分账账单 Rsp
@@ -1319,6 +1335,30 @@ type MediaUpload struct {
 	MediaId string `json:"media_id"` // 微信返回的媒体文件标识ID。
 }
 
+type CommerceFundWithdraw struct {
+	SubMchid     string `json:"sub_mchid,omitempty"` // 子商户号，即分账的出资商户号【服务商模式】
+	WithdrawId   string `json:"withdraw_id"`         // 微信支付提现单号
+	OutRequestNo string `json:"out_request_no"`      // 商户分账单号
+}
+
+type CommerceFundWithdrawQuery struct {
+	SubMchid      string `json:"sub_mchid,omitempty"` // 子商户号，即分账的出资商户号【服务商模式】
+	SpMchid       string `json:"sp_mchid"`            // 电商平台商户号
+	Status        string `json:"status"`              // 提现单状态
+	WithdrawId    string `json:"withdraw_id"`         // 微信支付提现单号
+	OutRequestNo  string `json:"out_request_no"`      // 商户分账单号
+	Amount        int    `json:"amount"`              // 提现金额
+	CreateTime    string `json:"create_time"`         // 发起提现时间
+	UpdateTime    string `json:"update_time"`         // 提现状态更新时间
+	FailReason    string `json:"reason"`              // 失败原因
+	Remark        string `json:"remark"`              // 提现备注
+	BankMemo      string `json:"bank_memo"`           // 银行附言
+	AccountType   string `json:"account_type"`        // 出款账户类型
+	AccountNumber string `json:"account_number"`      // 入账银行账号后四位
+	AccountBank   string `json:"account_bank"`        // 入账银行
+	BankName      string `json:"bank_name,omitempty"` // 入账银行全称（含支行）
+}
+
 type CommerceProfitShareOrder struct {
 	SubMchid      string                           `json:"sub_mchid,omitempty"` // 子商户号，即分账的出资商户号【服务商模式】
 	TransactionId string                           `json:"transaction_id"`      // 微信订单号
@@ -1354,10 +1394,10 @@ type CommerceProfitShareOrderQuery struct {
 }
 
 type CommerceProfitShareFinishOrder struct {
-	SubMchid      string                           `json:"sub_mchid,omitempty"` // 子商户号，即分账的出资商户号【服务商模式】
-	TransactionId string                           `json:"transaction_id"`      // 微信订单号
-	OutOrderNo    string                           `json:"out_order_no"`        // 商户分账单号
-	OrderId       string                           `json:"order_id"`            // 微信分账单号
+	SubMchid      string `json:"sub_mchid,omitempty"` // 子商户号，即分账的出资商户号【服务商模式】
+	TransactionId string `json:"transaction_id"`      // 微信订单号
+	OutOrderNo    string `json:"out_order_no"`        // 商户分账单号
+	OrderId       string `json:"order_id"`            // 微信分账单号
 }
 
 type ProfitShareOrder struct {
@@ -1439,7 +1479,7 @@ type ProfitShareAddReceiver struct {
 	Type           string `json:"type"`                      // 分账接收方类型MERCHANT_ID：商户ID,PERSONAL_OPENID：个人openid（由父商户APPID转换得到）
 	Account        string `json:"account"`                   // 分账接收方帐号
 	Name           string `json:"name,omitempty"`            // 分账接收方类型是MERCHANT_ID时，是商户全称（必传），当商户是小微商户或个体户时，是开户人姓名 分账接收方类型是PERSONAL_OPENID时，是个人姓名（选传，传则校验）
-	RelationType   string `json:"relation_type,omitempty"`             // 商户与接收方的关系。STORE：门店STAFF：员工	STORE_OWNER：店主	PARTNER：合作伙伴	HEADQUARTER：总部	BRAND：品牌方	DISTRIBUTOR：分销商	USER：用户	SUPPLIER： 供应商	CUSTOM：自定义
+	RelationType   string `json:"relation_type,omitempty"`   // 商户与接收方的关系。STORE：门店STAFF：员工	STORE_OWNER：店主	PARTNER：合作伙伴	HEADQUARTER：总部	BRAND：品牌方	DISTRIBUTOR：分销商	USER：用户	SUPPLIER： 供应商	CUSTOM：自定义
 	CustomRelation string `json:"custom_relation,omitempty"` // 子商户与接收方具体的关系，本字段最多10个字。当字段relation_type的值为CUSTOM时，本字段必填;当字段relation_type的值不为CUSTOM时，本字段无需填写。
 }
 
