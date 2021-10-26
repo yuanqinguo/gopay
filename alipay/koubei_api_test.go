@@ -3,8 +3,8 @@ package alipay
 import (
 	"testing"
 
-	"github.com/go-pay/gopay"
-	"github.com/go-pay/gopay/pkg/xlog"
+	"github.com/yuanqinguo/gopay"
+	"github.com/yuanqinguo/gopay/pkg/xlog"
 )
 
 func TestKoubeiTradeOrderPrecreate(t *testing.T) {

@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/go-pay/gopay/pkg/xhttp"
-	"github.com/go-pay/gopay/pkg/xlog"
+	"github.com/yuanqinguo/gopay/pkg/xhttp"
+	"github.com/yuanqinguo/gopay/pkg/xlog"
 )
 
 func TestBodyMap_CheckParamsNull(t *testing.T) {

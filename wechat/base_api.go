@@ -6,8 +6,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/go-pay/gopay"
-	"github.com/go-pay/gopay/pkg/util"
+	"github.com/yuanqinguo/gopay"
+	"github.com/yuanqinguo/gopay/pkg/util"
 )
 
 // 统一下单

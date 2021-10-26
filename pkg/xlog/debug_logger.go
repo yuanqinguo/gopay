@@ -8,7 +8,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/go-pay/gopay/pkg/util"
+	"github.com/yuanqinguo/gopay/pkg/util"
 )
 
 type DebugLogger struct {

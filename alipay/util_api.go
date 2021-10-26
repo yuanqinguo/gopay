@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/go-pay/gopay"
-	"github.com/go-pay/gopay/pkg/util"
+	"github.com/yuanqinguo/gopay"
+	"github.com/yuanqinguo/gopay/pkg/util"
 )
 
 // alipay.user.info.auth(用户登陆授权)

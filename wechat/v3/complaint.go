@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/go-pay/gopay"
-	"github.com/go-pay/gopay/pkg/util"
+	"github.com/yuanqinguo/gopay"
+	"github.com/yuanqinguo/gopay/pkg/util"
 )
 
 // 创建投诉通知回调地址API

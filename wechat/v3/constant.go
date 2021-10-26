@@ -62,9 +62,10 @@ const (
 	v3SubFundFlowBill       = "/v3/bill/sub-merchant-fundflowbill" // 申请单个子商户资金账单 GET
 
 	// 提现
-	v3Withdraw       = "/v3/ecommerce/fund/withdraw"    // 特约商户余额提 POST
-	v3WithdrawStatus = "/v3/ecommerce/fund/withdraw/%s" // withdraw_id 查询特约商户提现状态 GET
-	v3               = "/v3/merchant/fund/withdraw/bill-type/{bill_type}"
+	v3Withdraw                   = "/v3/ecommerce/fund/withdraw"                   // 特约商户余额提 POST
+	v3WithdrawStatus             = "/v3/ecommerce/fund/withdraw/%s"                // withdraw_id 查询特约商户提现状态 GET
+	v3WithdrawOutRequestNoStatus = "/v3/ecommerce/fund/withdraw/out-request-no/%s" // out-request-no 查询特约商户提现状态 GET
+	v3                           = "/v3/merchant/fund/withdraw/bill-type/{bill_type}"
 
 	// 微信支付分（免确认模式）
 	v3ScoreDirectComplete = "/payscore/serviceorder/direct-complete" // 创单结单合并 POST
@@ -171,6 +172,16 @@ const (
 	v3ProfitShareDeleteReceiver  = "/v3/profitsharing/receivers/delete"        // 删除分账接收方 POST
 	v3ProfitShareMerchantConfigs = "/v3/profitsharing/merchant-configs/%s"     // 查询最大分账比例API GET
 	v3ProfitShareBills           = "/v3/profitsharing/bills"                   // 申请分账账单 GET
+
+	// 电商收付通分账
+	v3CommerceProfitShareOrder          = "/v3/ecommerce/profitsharing/orders"            // 请求分账 POST
+	v3CommerceProfitShareQuery          = "/v3/ecommerce/profitsharing/orders/%s"         // 查询分账结果 GET
+	v3CommerceProfitShareReturn         = "/v3/ecommerce/profitsharing/returnorders"      // 请求分账回退 POST
+	v3CommerceProfitShareReturnResult   = "/v3/ecommerce/profitsharing/returnorders/%s"   // 查询分账回退结果 GET
+	v3CommerceProfitShareFinish         = "/v3/ecommerce/profitsharing/finish-order"      // 完结分账 POST
+	v3CommerceProfitShareUnsplitAmount  = "/v3/ecommerce/profitsharing/orders/%s/amounts" // 查询剩余待分金额 GET
+	v3CommerceProfitShareAddReceiver    = "/v3/ecommerce/profitsharing/receivers/add"     // 添加分账接收方 POST
+	v3CommerceProfitShareDeleteReceiver = "/v3/ecommerce/profitsharing/receivers/delete"  // 删除分账接收方 POST
 
 	// 其他能力
 	v3MediaUploadImage = "/v3/merchant/media/upload"       // 图片上传 POST

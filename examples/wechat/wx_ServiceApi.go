@@ -3,10 +3,10 @@ package wechat
 import (
 	"net/http"
 
-	"github.com/go-pay/gopay"
-	"github.com/go-pay/gopay/pkg/util"
-	"github.com/go-pay/gopay/pkg/xlog"
-	"github.com/go-pay/gopay/wechat"
+	"github.com/yuanqinguo/gopay"
+	"github.com/yuanqinguo/gopay/pkg/util"
+	"github.com/yuanqinguo/gopay/pkg/xlog"
+	"github.com/yuanqinguo/gopay/wechat"
 )
 
 func Code2Session() {

@@ -10,10 +10,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/go-pay/gopay"
-	"github.com/go-pay/gopay/pkg/util"
-	"github.com/go-pay/gopay/pkg/xlog"
-	"github.com/go-pay/gopay/pkg/xpem"
+	"github.com/yuanqinguo/gopay"
+	"github.com/yuanqinguo/gopay/pkg/util"
+	"github.com/yuanqinguo/gopay/pkg/xlog"
+	"github.com/yuanqinguo/gopay/pkg/xpem"
 )
 
 // V3VerifySign 微信V3 版本验签（同步/异步）
