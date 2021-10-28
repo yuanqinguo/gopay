@@ -37,8 +37,8 @@ func (c *ClientV3) V3CommerceFundWithDraw(bm gopay.BodyMap) (*CommerceFundWithdr
 // 基于微信支付提现单号查询 withdraw_id
 //	Code = 0 is success
 // 	电商收付通文档：https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter7_8_3.shtml
-func (c *ClientV3) V3CommerceFundWithdrawQuery(withdrawId string) (*CommerceFundWithdrawQueryRsp, error) {
-	uri := fmt.Sprintf(v3WithdrawStatus, withdrawId)
+func (c *ClientV3) V3CommerceFundWithdrawQuery(subMchId, withdrawId string) (*CommerceFundWithdrawQueryRsp, error) {
+	uri := fmt.Sprintf(v3WithdrawStatus, withdrawId) + fmt.Sprintf("?sub_mchid=%s", subMchId)
 	authorization, err := c.authorization(MethodGet, uri, nil)
 	if err != nil {
 		return nil, err
@@ -65,8 +65,8 @@ func (c *ClientV3) V3CommerceFundWithdrawQuery(withdrawId string) (*CommerceFund
 // 基于商户提现单号查询 out_request_no
 //	Code = 0 is success
 // 	电商收付通文档：https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter7_8_3.shtml
-func (c *ClientV3) V3CommerceFundWithdrawOutRequestNoQuery(outRequestNo string) (*CommerceFundWithdrawQueryRsp, error) {
-	uri := fmt.Sprintf(v3WithdrawOutRequestNoStatus, outRequestNo)
+func (c *ClientV3) V3CommerceFundWithdrawOutRequestNoQuery(subMchId, outRequestNo string) (*CommerceFundWithdrawQueryRsp, error) {
+	uri := fmt.Sprintf(v3WithdrawOutRequestNoStatus, outRequestNo) + fmt.Sprintf("?sub_mchid=%s", subMchId)
 	authorization, err := c.authorization(MethodGet, uri, nil)
 	if err != nil {
 		return nil, err
