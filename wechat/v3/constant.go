@@ -52,8 +52,11 @@ const (
 	v3DomesticRefundQuery = "/v3/refund/domestic/refunds/%s" // 查询单笔退款
 
 	// 退款（电商收付通）
-	v3CommerceRefund      = "/v3/ecommerce/refunds/apply"
+	v3CommerceRefund = "/v3/ecommerce/refunds/apply"
+	// 查询退款 通过退款ID查询
 	v3CommerceRefundQuery = "/v3/ecommerce/refunds/id/%s"
+	// 查询退款 通过订单号查询
+	v3CommerceRefundQueryOutRefundNo = "/v3/ecommerce/refunds/out-refund-no/%s"
 
 	// 账单
 	v3TradeBill             = "/v3/bill/tradebill"                 // 申请交易账单 GET
