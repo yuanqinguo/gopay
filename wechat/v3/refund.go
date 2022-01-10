@@ -37,8 +37,12 @@ func (c *ClientV3) V3CommerceRefund(bm gopay.BodyMap) (wxRsp *RefundRsp, err err
 // 查询单笔退款API
 //	Code = 0 is success
 //	电商收付通查询退款API文档：https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter7_6_1.shtml
-func (c *ClientV3) V3CommerceRefundQuery(outRefundNo string) (wxRsp *RefundQueryRsp, err error) {
-	uri := fmt.Sprintf(v3CommerceRefundQuery, outRefundNo)
+func (c *ClientV3) V3CommerceRefundQuery(outRefundNo, refundId, subMchid string) (wxRsp *RefundQueryRsp, err error) {
+	uri := fmt.Sprintf(v3CommerceRefundQuery+"?sub_mchid=%s", refundId, subMchid)
+	if len(outRefundNo) > 0 {
+		uri = fmt.Sprintf(v3CommerceRefundQueryOutRefundNo+"?sub_mchid=%s", outRefundNo, subMchid)
+	}
+
 	authorization, err := c.authorization(MethodGet, uri, nil)
 	if err != nil {
 		return nil, err
